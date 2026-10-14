@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 
-// Baked in at build time (see Dockerfile.frontend / docker-compose.yml).
-// In Kubernetes the Ingress makes /api same-origin, so this defaults to "/api".
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "/api";
+
+const pageStyle = {
+  fontFamily: "system-ui, sans-serif",
+  maxWidth: 480,
+  margin: "40px auto",
+  padding: 16,
+  color: "#111",
+  background: "#fff",
+  minHeight: "100vh",
+};
 
 export default function App() {
   const [items, setItems] = useState([]);
@@ -27,6 +35,7 @@ export default function App() {
   async function addItem(e) {
     e.preventDefault();
     if (!name.trim()) return;
+
     try {
       const res = await fetch(`${API_BASE}/items`, {
         method: "POST",
@@ -42,13 +51,16 @@ export default function App() {
   }
 
   return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: 480, margin: "40px auto" }}>
+    <div style={pageStyle}>
       <h1>Node + React + Postgres</h1>
       <p>
         API base: <code>{API_BASE}</code>
       </p>
       {error && <p style={{ color: "crimson" }}>{error}</p>}
-      <form onSubmit={addItem} style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+      <form
+        onSubmit={addItem}
+        style={{ display: "flex", gap: 8, marginBottom: 16 }}
+      >
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}

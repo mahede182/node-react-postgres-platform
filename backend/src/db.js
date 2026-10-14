@@ -10,20 +10,19 @@ function buildConnectionString() {
     DB_PORT = "5432",
     DB_NAME = "appdb",
   } = process.env;
+
   return `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 }
 
-// Simulated read/write DB cluster: two pools pointed at different env vars.
-// Locally both usually resolve to the same Postgres instance, but the app
-// already treats reads and writes as separate targets, so pointing
-// DB_READ_URL at a real replica later is a config-only change - no code edits.
 const writePool = new Pool({
   connectionString: process.env.DB_WRITE_URL || buildConnectionString(),
 });
 
 const readPool = new Pool({
   connectionString:
-    process.env.DB_READ_URL || process.env.DB_WRITE_URL || buildConnectionString(),
+    process.env.DB_READ_URL ||
+    process.env.DB_WRITE_URL ||
+    buildConnectionString(),
 });
 
 export async function initSchema() {
@@ -36,16 +35,10 @@ export async function initSchema() {
   `);
 }
 
-// All INSERT/UPDATE/DELETE statements must go through write() -> writePool,
-// which in a real cluster points at the primary.
 export function write(query, params) {
   return writePool.query(query, params);
 }
 
-// SELECTs can be served from read() -> readPool, which in a real cluster
-// points at a replica. Anything that just read its own write (e.g. a
-// "did my update succeed" check right after a write) should still use
-// write()/writePool to avoid replication-lag surprises.
 export function read(query, params) {
   return readPool.query(query, params);
 }

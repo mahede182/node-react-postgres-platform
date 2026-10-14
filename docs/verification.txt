@@ -1,0 +1,11 @@
+Task 1 verified locally with Colima + Docker Compose (2026-10-14)
+
+Endpoints:
+- http://localhost:8080  (frontend, nginx proxies /api)
+- http://localhost:4000/api/health
+- http://localhost:4000/api/health/ready
+- http://localhost:4000/api/health/redis
+- http://localhost:4000/api/health/search
+
+Browser E2E: added item "browser-e2e-ok" via UI; BullMQ worker processed jobs 1-3.
+Kubernetes: manifests under k8s/ + observability/; bootstrap with ./scripts/kind-up.sh

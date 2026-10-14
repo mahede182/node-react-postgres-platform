@@ -1,0 +1,7 @@
+NAME                                      IMAGE                                   COMMAND                  SERVICE    CREATED              STATUS                        PORTS
+node-react-postgres-platform-backend-1    node-react-postgres-platform-backend    "docker-entrypoint.s…"   backend    About a minute ago   Up About a minute (healthy)   0.0.0.0:4000->4000/tcp, :::4000->4000/tcp
+node-react-postgres-platform-frontend-1   node-react-postgres-platform-frontend   "/docker-entrypoint.…"   frontend   2 minutes ago        Up 2 minutes (healthy)        0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
+node-react-postgres-platform-postgres-1   postgres:16-alpine                      "docker-entrypoint.s…"   postgres   2 minutes ago        Up 2 minutes (healthy)        0.0.0.0:5432->5432/tcp, :::5432->5432/tcp
+node-react-postgres-platform-redis-1      redis:7-alpine                          "docker-entrypoint.s…"   redis      2 minutes ago        Up 2 minutes (healthy)        0.0.0.0:6379->6379/tcp, :::6379->6379/tcp
+node-react-postgres-platform-search-1     opensearchproject/opensearch:2.15.0     "./opensearch-docker…"   search     2 minutes ago        Up 2 minutes (healthy)        9300/tcp, 9600/tcp, 0.0.0.0:9200->9200/tcp, :::9200->9200/tcp, 9650/tcp
+node-react-postgres-platform-worker-1     node-react-postgres-platform-worker     "docker-entrypoint.s…"   worker     2 minutes ago        Up 2 minutes (unhealthy)      4000/tcp

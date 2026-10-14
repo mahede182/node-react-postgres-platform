@@ -1,0 +1,11 @@
+# HELP http_requests_total Total HTTP requests
+# TYPE http_requests_total counter
+http_requests_total{method="GET",route="/api/health/live",status="200"} 1
+http_requests_total{method="GET",route="/api/health/redis",status="200"} 2
+http_requests_total{method="GET",route="/api/items",status="200"} 1
+# HELP process_resident_memory_bytes Resident set size
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 81838080
+# HELP process_uptime_seconds Process uptime
+# TYPE process_uptime_seconds gauge
+process_uptime_seconds 8.255464026
